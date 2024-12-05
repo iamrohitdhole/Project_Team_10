@@ -1,0 +1,89 @@
+version: 2
+
+models:
+  - name: staging_imdb_tmdb_movies
+    description: "Staging table combining IMDb and TMDb data."
+    columns:
+      - name: primary_title
+        description: "Primary title from the IMDb dataset."
+      - name: genres
+        description: "Genres associated with the movie from IMDb."
+      - name: movie_id
+        description: "Unique identifier for the movie in TMDb."
+      - name: movie_title
+        description: "Title of the movie from TMDb."
+      - name: release_date
+        description: "Release date of the movie from TMDb."
+      - name: original_language
+        description: "Original language of the movie."
+      - name: vote_count
+        description: "Number of votes received by the movie."
+      - name: vote_average
+        description: "Average vote rating of the movie."
+      - name: popularity
+        description: "Popularity score of the movie."
+
+  - name: avg_vote_count_by_genre
+    description: "Calculates the average vote count by genre across all movies."
+    columns:
+      - name: genre
+        description: "Individual movie genres."
+      - name: avg_vote_count
+        description: "Average number of votes received by movies in this genre."
+
+  - name: movies_by_genre
+    description: "Counts the number of movies for each genre."
+    columns:
+      - name: genre
+        description: "Individual movie genres."
+      - name: movie_count
+        description: "Number of movies in this genre."
+
+  - name: movies_by_release_year
+    description: "Aggregates movies by release year with average popularity."
+    columns:
+      - name: release_year
+        description: "Year of release for the movies."
+      - name: total_movies
+        description: "Total number of movies released in the year."
+      - name: avg_popularity
+        description: "Average popularity score of movies released in the year."
+
+  - name: top_10_most_popular_movies
+    description: "Lists the top 10 most popular movies based on popularity score."
+    columns:
+      - name: movie_id
+        description: "Unique identifier for the movie in TMDb."
+        data_tests:
+          - not_null
+          - unique
+      - name: title
+        description: "Title of the movie."
+      - name: release_date
+        description: "Release date of the movie."
+      - name: popularity
+        description: "Popularity score of the movie."
+
+  - name: most_popular_genres
+    description: "Lists genres ranked by their total popularity across all movies."
+    columns:
+      - name: genre_name
+        description: "Movie genre."
+        data_tests:
+          - not_null
+      - name: avg_popularity
+        description: "Sum of popularity scores for all movies in this genre."
+      - name: movie_count
+        description: "Number of movies in this genre."
+
+  - name: avg_popularity_by_language
+    description: "Calculates the average popularity by original language."
+    columns:
+      - name: original_language
+        description: "Original language of the movies."
+        data_tests:
+          - not_null
+      - name: avg_popularity
+        description: "Average popularity score of movies in this language."
+      - name: movie_count
+        description: "Number of movies in this language."
